@@ -18,6 +18,8 @@
 		4D4F1DD323832BF300F91CC9 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4F1DD223832BF300F91CC9 /* LoginVC.swift */; };
 		4D4F1DD523832D8500F91CC9 /* RedScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4F1DD423832D8500F91CC9 /* RedScreen.swift */; };
 		4D4F1DD923833F6400F91CC9 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4F1DD823833F6400F91CC9 /* ProfileVC.swift */; };
+		4D4F1DDB23834B6500F91CC9 /* FeedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4F1DDA23834B6500F91CC9 /* FeedVC.swift */; };
+		4D4F1DDD23834D4200F91CC9 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4F1DDC23834D4200F91CC9 /* FeedCell.swift */; };
 		95080D37E92DD8279F1B9B4E /* Pods_FireBase_ProjectTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF235AC06AD622D89316B784 /* Pods_FireBase_ProjectTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -46,6 +48,8 @@
 		4D4F1DD223832BF300F91CC9 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		4D4F1DD423832D8500F91CC9 /* RedScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedScreen.swift; sourceTree = "<group>"; };
 		4D4F1DD823833F6400F91CC9 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
+		4D4F1DDA23834B6500F91CC9 /* FeedVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedVC.swift; sourceTree = "<group>"; };
+		4D4F1DDC23834D4200F91CC9 /* FeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
 		7380CF34D65FF5BFF4C6BC9F /* Pods-FireBase-Project.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FireBase-Project.debug.xcconfig"; path = "Target Support Files/Pods-FireBase-Project/Pods-FireBase-Project.debug.xcconfig"; sourceTree = "<group>"; };
 		9EDF07BEB83FFCD0C6803688 /* Pods-FireBase-ProjectTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FireBase-ProjectTests.debug.xcconfig"; path = "Target Support Files/Pods-FireBase-ProjectTests/Pods-FireBase-ProjectTests.debug.xcconfig"; sourceTree = "<group>"; };
 		AA791766BE8FB6B792C44C24 /* Pods_FireBase_Project.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FireBase_Project.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -134,6 +138,7 @@
 			children = (
 				4D4F1DD223832BF300F91CC9 /* LoginVC.swift */,
 				4D4F1DD823833F6400F91CC9 /* ProfileVC.swift */,
+				4D4F1DDA23834B6500F91CC9 /* FeedVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -142,6 +147,7 @@
 			isa = PBXGroup;
 			children = (
 				4D4F1DD423832D8500F91CC9 /* RedScreen.swift */,
+				4D4F1DDC23834D4200F91CC9 /* FeedCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -333,6 +339,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D4F1DDD23834D4200F91CC9 /* FeedCell.swift in Sources */,
+				4D4F1DDB23834B6500F91CC9 /* FeedVC.swift in Sources */,
 				4D4F1DD923833F6400F91CC9 /* ProfileVC.swift in Sources */,
 				4D4F1DAC2383255300F91CC9 /* AppDelegate.swift in Sources */,
 				4D4F1DD523832D8500F91CC9 /* RedScreen.swift in Sources */,
