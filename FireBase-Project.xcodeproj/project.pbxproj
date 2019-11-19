@@ -27,6 +27,7 @@
 		4D4F1DE72384595300F91CC9 /* FirebaseStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4F1DE62384595300F91CC9 /* FirebaseStorageManager.swift */; };
 		4D4F1DE9238459CC00F91CC9 /* AppUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4F1DE8238459CC00F91CC9 /* AppUser.swift */; };
 		4D4F1DEB23845A1600F91CC9 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4F1DEA23845A1600F91CC9 /* Post.swift */; };
+		4D4F1DEF23849E9800F91CC9 /* FirebaseTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4F1DEE23849E9800F91CC9 /* FirebaseTabBar.swift */; };
 		95080D37E92DD8279F1B9B4E /* Pods_FireBase_ProjectTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF235AC06AD622D89316B784 /* Pods_FireBase_ProjectTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -64,6 +65,7 @@
 		4D4F1DE62384595300F91CC9 /* FirebaseStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStorageManager.swift; sourceTree = "<group>"; };
 		4D4F1DE8238459CC00F91CC9 /* AppUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUser.swift; sourceTree = "<group>"; };
 		4D4F1DEA23845A1600F91CC9 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		4D4F1DEE23849E9800F91CC9 /* FirebaseTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseTabBar.swift; sourceTree = "<group>"; };
 		7380CF34D65FF5BFF4C6BC9F /* Pods-FireBase-Project.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FireBase-Project.debug.xcconfig"; path = "Target Support Files/Pods-FireBase-Project/Pods-FireBase-Project.debug.xcconfig"; sourceTree = "<group>"; };
 		9EDF07BEB83FFCD0C6803688 /* Pods-FireBase-ProjectTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FireBase-ProjectTests.debug.xcconfig"; path = "Target Support Files/Pods-FireBase-ProjectTests/Pods-FireBase-ProjectTests.debug.xcconfig"; sourceTree = "<group>"; };
 		AA791766BE8FB6B792C44C24 /* Pods_FireBase_Project.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FireBase_Project.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -155,6 +157,7 @@
 				4D4F1DDA23834B6500F91CC9 /* FeedVC.swift */,
 				4D4F1DDE2383504400F91CC9 /* ImageUploadVC.swift */,
 				4D4F1DE02383540C00F91CC9 /* ImageDetailVC.swift */,
+				4D4F1DEE23849E9800F91CC9 /* FirebaseTabBar.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -370,6 +373,7 @@
 				4D4F1DE32384543500F91CC9 /* FirebaseAuthManager.swift in Sources */,
 				4D4F1DD523832D8500F91CC9 /* RedScreen.swift in Sources */,
 				4D4F1DAE2383255300F91CC9 /* SceneDelegate.swift in Sources */,
+				4D4F1DEF23849E9800F91CC9 /* FirebaseTabBar.swift in Sources */,
 				4D4F1DE12383540C00F91CC9 /* ImageDetailVC.swift in Sources */,
 				4D4F1DD323832BF300F91CC9 /* LoginVC.swift in Sources */,
 				4D4F1DDF2383504400F91CC9 /* ImageUploadVC.swift in Sources */,

@@ -164,12 +164,17 @@ class LoginVC: UIViewController {
             //MARK: TODO - refactor this logic into scene delegate
             UIView.transition(with: window, duration: 0.3, options: .transitionFlipFromBottom, animations: {
                 if FirebaseAuthService.manager.currentUser?.photoURL != nil {
-                    window.rootViewController = ProfileVC()
+                    window.rootViewController = {
+                        let profileSetupVC = FirebaseTabBar()
+                            profileSetupVC.selectedIndex = 3
+                        return profileSetupVC
+                    }()
                 } else {
                     window.rootViewController = {
-                        let profileSetupVC = FeedVC()
+                        let feedSetupVC = FirebaseTabBar()
+                        feedSetupVC.selectedIndex = 0
                         //profileSetupVC.settingFromLogin = true
-                        return profileSetupVC
+                        return feedSetupVC
                     }()
                 }
             }, completion: nil)
@@ -194,12 +199,17 @@ class LoginVC: UIViewController {
             //MARK: TODO - refactor this logic into scene delegate
             UIView.transition(with: window, duration: 0.3, options: .transitionFlipFromBottom, animations: {
                 if FirebaseAuthService.manager.currentUser?.photoURL != nil {
-                    window.rootViewController = ProfileVC()
+                    window.rootViewController = {
+                        let profileSetupVC = FirebaseTabBar()
+                            profileSetupVC.selectedIndex = 3
+                        return profileSetupVC
+                    }()
                 } else {
                     window.rootViewController = {
-                        let profileSetupVC = FeedVC()
+                        let feedSetupVC = FirebaseTabBar()
+                        feedSetupVC.selectedIndex = 0
                         //profileSetupVC.settingFromLogin = true
-                        return profileSetupVC
+                        return feedSetupVC
                     }()
                 }
             }, completion: nil)
