@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class LoginVC: UIViewController {
     //MARK: - UI Objects
@@ -48,7 +49,7 @@ class LoginVC: UIViewController {
         button.titleLabel?.font = UIFont(name: "Verdana-Bold", size: 14)
         button.backgroundColor = #colorLiteral(red: 0.9686274529, green: 0.78039217, blue: 0.3450980484, alpha: 1)
         button.layer.cornerRadius = 5
-//        button.addTarget(self, action: #selector(tryLogin), for: .touchUpInside)
+        button.addTarget(self, action: #selector(tryLogIn), for: .touchUpInside)
         return button
     }()
     var createAccountButton: UIButton = {
@@ -58,12 +59,15 @@ class LoginVC: UIViewController {
             NSAttributedString.Key.foregroundColor: UIColor.white])
         attributedTitle.append(NSAttributedString(string: "Sign Up",
                                                   attributes: [NSAttributedString.Key.font: UIFont(name: "Verdana-Bold", size: 14)!,
-                                                               NSAttributedString.Key.foregroundColor:  UIColor(red: 17/255, green: 154/255, blue: 237/255, alpha: 1)]))
+                                                               
+                                NSAttributedString.Key.foregroundColor:  UIColor(red: 17/255, green: 154/255, blue: 237/255, alpha: 1)]))
         button.setAttributedTitle(attributedTitle, for: .normal)
-        //        button.addTarget(self, action: #selector(showSignUp), for: .touchUpInside)
+                button.addTarget(self, action: #selector(displayForm), for: .touchUpInside)
         return button
     }()
     
+    var signInEmail: UITextField?
+    var signInPassword: UITextField?
     var redView = RedScreen()
     
     //MARK: - Constraints
@@ -124,6 +128,139 @@ class LoginVC: UIViewController {
         NSLayoutConstraint.activate([
             createAccountButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             createAccountButton.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,constant: -40)])
+    }
+    //MARK: - Functions
+    
+    private func makeAlert(with title: String, and message: String) {
+        let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        present(alertVC, animated: true, completion: nil)
+    }
+    
+    
+    //MARK: Handling SignIn
+    private func handleCreateAccountResponse(with result: Result<User, Error>) {
+        DispatchQueue.main.async { [weak self] in
+            switch result {
+            case .success(let user):
+                FirestoreService.manager.createAppUser(user: AppUser(from: user)) { [weak self] newResult in
+                    self?.handleCreatedUserInFirestore(result: newResult)
+                }
+            case .failure(let error):
+                self?.makeAlert(with: "Error creating user", and: "An error occured while creating new account \(error)")
+            }
+        }
+    }
+    private func handleCreatedUserInFirestore(result: Result<(), Error>) {
+        switch result {
+        case .success:
+            guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                let sceneDelegate = windowScene.delegate as? SceneDelegate, let window = sceneDelegate.window
+                else {
+                    //MARK: TODO - handle could not swap root view controller
+                    return
+            }
+            
+            //MARK: TODO - refactor this logic into scene delegate
+            UIView.transition(with: window, duration: 0.3, options: .transitionFlipFromBottom, animations: {
+                if FirebaseAuthService.manager.currentUser?.photoURL != nil {
+                    window.rootViewController = ProfileVC()
+                } else {
+                    window.rootViewController = {
+                        let profileSetupVC = FeedVC()
+                        //profileSetupVC.settingFromLogin = true
+                        return profileSetupVC
+                    }()
+                }
+            }, completion: nil)
+        case .failure(let error):
+            self.makeAlert(with: "Error creating user", and: "An error occured while creating new account \(error)")
+        }
+    }
+    //MARK: Handling Login
+    private func handleLoginResponse(with result: Result<(), Error>) {
+        switch result {
+        case .failure(let error):
+            makeAlert(with: "Error", and: "Could not log in. Error: \(error)")
+        case .success:
+            
+            guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                let sceneDelegate = windowScene.delegate as? SceneDelegate, let window = sceneDelegate.window
+                else {
+                    //MARK: TODO - handle could not swap root view controller
+                    return
+            }
+            
+            //MARK: TODO - refactor this logic into scene delegate
+            UIView.transition(with: window, duration: 0.3, options: .transitionFlipFromBottom, animations: {
+                if FirebaseAuthService.manager.currentUser?.photoURL != nil {
+                    window.rootViewController = ProfileVC()
+                } else {
+                    window.rootViewController = {
+                        let profileSetupVC = FeedVC()
+                        //profileSetupVC.settingFromLogin = true
+                        return profileSetupVC
+                    }()
+                }
+            }, completion: nil)
+        }
+    }
+    
+    //MARK: - Objc Func
+    @objc func tryLogIn() {
+        guard let email = emailTextField.text, !email.isEmpty, let password = passwordTextField.text, !password.isEmpty else {
+            makeAlert(with: "Required", and: "Fill both fields")
+            return
+        }
+        FirebaseAuthService.manager.loginUser(email: email.lowercased(), password: password) { (result) in
+            self.handleLoginResponse(with: result)
+        }
+    }
+    @objc func displayForm(){
+        //create alert
+        let alert = UIAlertController(title: "Sign In", message: "Create an account", preferredStyle: .alert)
+        
+        //create cancel button
+        let cancelAction = UIAlertAction(title: "Cancel" , style: .cancel)
+        
+        //create save button
+        let saveAction = UIAlertAction(title: "Submit", style: .default) { (action) -> Void in
+            
+            guard let email = self.signInEmail?.text, !email.isEmpty, let password = self.signInPassword?.text, !password.isEmpty else {
+                self.makeAlert(with: "Required", and: "Fill both fields")
+                return
+            }
+            FirebaseAuthService.manager.createNewUser(email: email.lowercased(), password: password) { (result) in
+                switch result {
+                case .failure(let error):
+                    self.makeAlert(with: "Couldn't create user", and: "Error: \(error)")
+                case .success(let newUser):
+                    FirestoreService.manager.createAppUser(user: AppUser.init(from: newUser)) { (result) in
+                        self.handleLoginResponse(with: result)
+                    }
+                    
+                }
+            }
+        }
+        
+        //add button to alert
+        alert.addAction(cancelAction)
+        alert.addAction(saveAction)
+        
+        //email
+        alert.addTextField(configurationHandler: {(textField: UITextField!) in
+            textField.placeholder = "Enter email address"
+            self.signInEmail = textField
+        })
+        
+        //password
+        alert.addTextField(configurationHandler: {(textField: UITextField!) in
+            textField.placeholder = "Enter password"
+            textField.isSecureTextEntry = true
+            self.signInPassword = textField
+        })
+        
+        self.present(alert, animated: true, completion: nil)
     }
     
     //MARK: - LifeCycle
