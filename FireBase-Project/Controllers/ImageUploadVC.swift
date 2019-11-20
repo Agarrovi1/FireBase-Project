@@ -7,8 +7,17 @@
 //
 
 import UIKit
+import Photos
 
 class ImageUploadVC: UIViewController {
+    //MARK: - Properties
+    var image = UIImage() {
+        didSet {
+            self.uploadImageView.image = image
+        }
+    }
+    var imageURL: URL? = nil
+    
     //MARK: - UI Objects
     var uploadLabel: UILabel = {
         let label = UILabel()
@@ -28,6 +37,13 @@ class ImageUploadVC: UIViewController {
         let button = UIButton()
         button.setTitle("Upload", for: .normal)
         button.setTitleColor(.systemTeal, for: .normal)
+        button.addTarget(self, action: #selector(uploadButtonTapped), for: .touchUpInside)
+        return button
+    }()
+    var addButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "add"), for: .normal)
+        button.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -36,6 +52,7 @@ class ImageUploadVC: UIViewController {
         setUploadLabelConstraints()
         setUploadImageConstraints()
         setUploadButtonConstraints()
+        setAddButtonConstraints()
     }
     private func setUploadLabelConstraints() {
         view.addSubview(uploadLabel)
@@ -61,6 +78,66 @@ class ImageUploadVC: UIViewController {
             uploadButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -100),
             uploadButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor)])
     }
+    private func setAddButtonConstraints() {
+        view.addSubview(addButton)
+        addButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            addButton.bottomAnchor.constraint(equalTo: uploadImageView.topAnchor),
+            addButton.trailingAnchor.constraint(equalTo: uploadImageView.trailingAnchor,constant: 30),
+            addButton.heightAnchor.constraint(equalToConstant: 50),
+            addButton.widthAnchor.constraint(equalToConstant: 50)])
+    }
+    
+    //MARK: - Properties
+    private func presentPhotoPickerController() {
+        DispatchQueue.main.async{
+            let imagePickerViewController = UIImagePickerController()
+            imagePickerViewController.delegate = self
+            imagePickerViewController.sourceType = .photoLibrary
+            imagePickerViewController.allowsEditing = true
+            imagePickerViewController.mediaTypes = ["public.image", "public.movie"]
+            self.present(imagePickerViewController, animated: true, completion: nil)
+        }
+    }
+    private func makeAlert(with title: String, and message: String) {
+        let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        present(alertVC, animated: true, completion: nil)
+    }
+    
+    //MARK: - Objc Func
+    @objc func addButtonTapped() {
+        switch PHPhotoLibrary.authorizationStatus() {
+        case .notDetermined, .denied, .restricted:
+            PHPhotoLibrary.requestAuthorization({[weak self] status in
+                switch status {
+                case .authorized:
+                    self?.presentPhotoPickerController()
+                case .denied:
+                    //MARK: TODO - set up more intuitive UI interaction
+                    print("Denied photo library permissions")
+                default:
+                    //MARK: TODO - set up more intuitive UI interaction
+                    print("No usable status")
+                }
+            })
+        default:
+            presentPhotoPickerController()
+        }
+    }
+    @objc func uploadButtonTapped() {
+        guard let user = FirebaseAuthService.manager.currentUser else {return}
+        guard let photoUrl = imageURL?.absoluteString else {return}
+        FirestoreService.manager.createPost(post: Post(photoUrl: photoUrl, creatorID: user.uid)) { (result) in
+            switch result {
+            case .failure(let error):
+                self.makeAlert(with: "Could not make post", and: "Error: \(error)")
+            case .success:
+                self.makeAlert(with: "Yay", and: "Post created")
+            }
+        }
+    }
+    
     
 
     //MARK: - LifeCycle
@@ -70,4 +147,32 @@ class ImageUploadVC: UIViewController {
         setUploadUI()
     }
 
+}
+
+extension ImageUploadVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        guard let image = info[.editedImage] as? UIImage else {
+            //MARK: TODO - handle couldn't get image :(
+            makeAlert(with: "Error", and: "Couldn't get image")
+            return
+        }
+        self.image = image
+        
+        guard let imageData = image.jpegData(compressionQuality: 1) else {
+            //MARK: TODO - gracefully fail out without interrupting UX
+            makeAlert(with: "Error", and: "could not compress image")
+            return
+        }
+        
+        FirebaseStorageService.uploadManager.storeImage(image: imageData, completion: { [weak self] (result) in
+            switch result{
+            case .success(let url):
+                self?.imageURL = url
+                
+            case .failure(let error):
+                print(error)
+            }
+        })
+        dismiss(animated: true, completion: nil)
+    }
 }
