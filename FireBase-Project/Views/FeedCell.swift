@@ -17,6 +17,9 @@ class FeedCell: UICollectionViewCell {
     }()
     var nameLabel: UILabel = {
         let label = UILabel()
+        label.textColor = .black
+        label.layer.borderColor = UIColor.red.cgColor
+        label.layer.borderWidth = 2
         label.textAlignment = .center
         return label
     }()
@@ -39,7 +42,7 @@ class FeedCell: UICollectionViewCell {
             nameLabel.topAnchor.constraint(equalTo: feedImage.bottomAnchor),
             nameLabel.leadingAnchor.constraint(equalTo: feedImage.leadingAnchor),
             nameLabel.trailingAnchor.constraint(equalTo: feedImage.trailingAnchor),
-            nameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)])
+            nameLabel.heightAnchor.constraint(equalToConstant: 50)])
     }
     
     

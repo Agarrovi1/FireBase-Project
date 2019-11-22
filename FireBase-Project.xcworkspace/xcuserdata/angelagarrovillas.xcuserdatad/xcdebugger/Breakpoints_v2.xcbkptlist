@@ -7,81 +7,49 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "D0463070-C229-48FE-BD9D-C38C74253E40"
-            shouldBeEnabled = "Yes"
+            uuid = "1987726E-6C9A-4CB2-A5BD-0D4F07AE6FF7"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "FireBase-Project/Controllers/FeedVC.swift"
+            filePath = "FireBase-Project/Controllers/ProfileVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "104"
-            endingLineNumber = "104"
-            landmarkName = "collectionView(_:cellForItemAt:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "079CCC1D-0573-4DDD-890C-CC360E4FDF14"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "FireBase-Project/Controllers/FeedVC.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "98"
-            endingLineNumber = "98"
-            landmarkName = "collectionView(_:cellForItemAt:)"
+            startingLineNumber = "167"
+            endingLineNumber = "167"
+            landmarkName = "setDefaultImage()"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "079CCC1D-0573-4DDD-890C-CC360E4FDF14 - f5490667ddb1587b"
-                  shouldBeEnabled = "Yes"
+                  uuid = "1987726E-6C9A-4CB2-A5BD-0D4F07AE6FF7 - b71f51f59ea4682f"
+                  shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () -&gt; () in FireBase_Project.FeedVC.collectionView(_: __C.UICollectionView, cellForItemAt: Foundation.IndexPath) -&gt; __C.UICollectionViewCell"
+                  symbolName = "FireBase_Project.ProfileVC.(setDefaultImage in _88CF970540458197C6881447FEDC9214)() -&gt; ()"
                   moduleName = "FireBase-Project"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/angelagarrovillas/Desktop/Projects/FireBase-Project/FireBase-Project/Controllers/FeedVC.swift"
+                  urlString = "file:///Users/angelagarrovillas/Desktop/Projects/FireBase-Project/FireBase-Project/Controllers/ProfileVC.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "98"
-                  endingLineNumber = "98"
-                  offsetFromSymbolStart = "199">
+                  startingLineNumber = "167"
+                  endingLineNumber = "167"
+                  offsetFromSymbolStart = "606">
                </Location>
                <Location
-                  uuid = "079CCC1D-0573-4DDD-890C-CC360E4FDF14 - 5a3f5dfb3e1588ef"
-                  shouldBeEnabled = "Yes"
+                  uuid = "1987726E-6C9A-4CB2-A5BD-0D4F07AE6FF7 - 1be750ce310a792b"
+                  shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Result&lt;__C.UIImage, FireBase_Project.AppError&gt;) -&gt; () in closure #1 () -&gt; () in FireBase_Project.FeedVC.collectionView(_: __C.UICollectionView, cellForItemAt: Foundation.IndexPath) -&gt; __C.UICollectionViewCell"
+                  symbolName = "closure #1 (Swift.Result&lt;__C.UIImage, Swift.Error&gt;) -&gt; () in FireBase_Project.ProfileVC.(setDefaultImage in _88CF970540458197C6881447FEDC9214)() -&gt; ()"
                   moduleName = "FireBase-Project"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/angelagarrovillas/Desktop/Projects/FireBase-Project/FireBase-Project/Controllers/FeedVC.swift"
+                  urlString = "file:///Users/angelagarrovillas/Desktop/Projects/FireBase-Project/FireBase-Project/Controllers/ProfileVC.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "100"
-                  endingLineNumber = "100"
+                  startingLineNumber = "169"
+                  endingLineNumber = "169"
                   offsetFromSymbolStart = "158">
                </Location>
             </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "15FD2A01-5A20-42BE-96E5-809B560E0556"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "FireBase-Project/Controllers/FeedVC.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "102"
-            endingLineNumber = "102"
-            landmarkName = "collectionView(_:cellForItemAt:)"
-            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

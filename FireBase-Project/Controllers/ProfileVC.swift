@@ -15,7 +15,7 @@ class ProfileVC: UIViewController {
             self.profileImage.image = image
         }
     }
-    var imageURL: URL? = nil
+    var imageURL: String? = nil
     var postCount = 0 {
         didSet {
             imageSubmissionLabel.text = "You have submitted \(postCount) images"
@@ -164,14 +164,12 @@ class ProfileVC: UIViewController {
     }
     private func setDefaultImage() {
         if let pictureUrl = FirebaseAuthService.manager.currentUser?.photoURL {
-            ImageHelper.shared.fetchImage(urlString: pictureUrl.absoluteString) { (result) in
+            FirebaseStorageService.profileManager.getUserImage(photoUrl: pictureUrl) { (result) in
                 switch result {
                 case .failure(let error):
                     print(error)
-                case .success(let userImage):
-                    DispatchQueue.main.async {
-                        self.profileImage.image = userImage
-                    }
+                case .success(let image):
+                    self.profileImage.image = image
                 }
             }
         }
@@ -263,6 +261,12 @@ class ProfileVC: UIViewController {
         setDefaultImage()
         getPostCount()
 
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setDefaultName()
+        setDefaultImage()
+        getPostCount()
     }
     
 

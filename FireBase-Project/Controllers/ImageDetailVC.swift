@@ -9,6 +9,10 @@
 import UIKit
 
 class ImageDetailVC: UIViewController {
+    //MARK: - Properties
+    
+    var post: Post?
+    
     //MARK: - UI Objects
     var detailLabel: UILabel = {
         let label = UILabel()
@@ -78,13 +82,43 @@ class ImageDetailVC: UIViewController {
             createdLabel.trailingAnchor.constraint(equalTo: submitLabel.trailingAnchor)])
     }
     
-    
+    //MARK: - Private Methods
+    private func loadDetails() {
+        getSetImage()
+        getSetUserName()
+        
+    }
+    private func getSetImage() {
+        if let photoUrl = post?.photoUrl {
+            FirebaseStorageService.uploadManager.getImage(url: photoUrl) { (result) in
+                switch result {
+                case .failure(let error):
+                    print(error)
+                case .success(let firebaseImage):
+                    self.detailImageView.image = firebaseImage
+                }
+            }
+        }
+    }
+    private func getSetUserName() {
+        if let post = post {
+            FirestoreService.manager.getUserNameFromPost(creatorID: post.creatorID) { (result) in
+                switch result {
+                case .failure(let error):
+                    print(error)
+                case .success(let displayName):
+                    self.submitLabel.text = "Submitted by: \(displayName)"
+                }
+            }
+        }
+    }
 
     //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = #colorLiteral(red: 0.9411764741, green: 0.4980392158, blue: 0.3529411852, alpha: 1)
         setDetailUI()
+        loadDetails()
 
     }
     

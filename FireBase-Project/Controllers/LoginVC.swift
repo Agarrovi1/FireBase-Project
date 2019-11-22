@@ -173,7 +173,6 @@ class LoginVC: UIViewController {
                     window.rootViewController = {
                         let feedSetupVC = FirebaseTabBar()
                         feedSetupVC.selectedIndex = 0
-                        //profileSetupVC.settingFromLogin = true
                         return feedSetupVC
                     }()
                 }
@@ -208,7 +207,6 @@ class LoginVC: UIViewController {
                     window.rootViewController = {
                         let feedSetupVC = FirebaseTabBar()
                         feedSetupVC.selectedIndex = 0
-                        //profileSetupVC.settingFromLogin = true
                         return feedSetupVC
                     }()
                 }

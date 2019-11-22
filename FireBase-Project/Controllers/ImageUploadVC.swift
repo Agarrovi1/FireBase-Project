@@ -16,7 +16,7 @@ class ImageUploadVC: UIViewController {
             self.uploadImageView.image = image
         }
     }
-    var imageURL: URL? = nil
+    var imageURL: String? = nil
     
     //MARK: - UI Objects
     var uploadLabel: UILabel = {
@@ -127,7 +127,7 @@ class ImageUploadVC: UIViewController {
     }
     @objc func uploadButtonTapped() {
         guard let user = FirebaseAuthService.manager.currentUser else {return}
-        guard let photoUrl = imageURL?.absoluteString else {return}
+        guard let photoUrl = imageURL else {return}
         FirestoreService.manager.createPost(post: Post(photoUrl: photoUrl, creatorID: user.uid)) { (result) in
             switch result {
             case .failure(let error):

@@ -5,7 +5,7 @@
 //  Created by Angela Garrovillas on 11/19/19.
 //  Copyright © 2019 Angela Garrovillas. All rights reserved.
 //
-
+import UIKit
 import Foundation
 import FirebaseStorage
 
@@ -34,7 +34,7 @@ class FirebaseStorageService {
     }
     
     
-    func storeImage(image: Data,  completion: @escaping (Result<URL,Error>) -> ()) {
+    func storeImage(image: Data,  completion: @escaping (Result<String,Error>) -> ()) {
         let metadata = StorageMetadata()
         metadata.contentType = "image/jpeg"
         let uuid = UUID()
@@ -46,14 +46,28 @@ class FirebaseStorageService {
                 //Try to get the actual URL for our image
                 imageLocation.downloadURL { (url, error) in
                     guard error == nil else {completion(.failure(error!));return}
-                    //MARK: TODO - set up custom app errors
-                    guard let url = url else {completion(.failure(error!));return}
+                    guard let url = url?.absoluteString else {completion(.failure(error!));return}
                     completion(.success(url))
                 }
             }
         }
     }
-    func getImage() {
-        imagesFolderReference
+    func getImage(url: String, completion: @escaping (Result<UIImage,Error>) -> ()) {
+        imagesFolderReference.storage.reference(forURL: url).getData(maxSize: 2000000) { (data, error) in
+            if let error = error {
+                completion(.failure(error))
+            } else if let data = data, let image = UIImage(data: data) {
+                completion(.success(image))
+            }
+        }
+    }
+    func getUserImage(photoUrl: URL, completion: @escaping (Result<UIImage,Error>) -> ()) {
+        imagesFolderReference.storage.reference(forURL: photoUrl.absoluteString).getData(maxSize: 2000000) { (data, error) in
+            if let error = error {
+                completion(.failure(error))
+            } else if let data = data, let image = UIImage(data: data) {
+                completion(.success(image))
+            }
+        }
     }
 }

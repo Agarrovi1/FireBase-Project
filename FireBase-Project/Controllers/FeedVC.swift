@@ -27,7 +27,7 @@ class FeedVC: UIViewController {
     }()
     var feedCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.estimatedItemSize = CGSize(width: 160, height: 160)
+        layout.estimatedItemSize = CGSize(width: 150, height: 150)
         let collection = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
         collection.backgroundColor = .white
         collection.register(FeedCell.self, forCellWithReuseIdentifier: "feedCell")
@@ -81,8 +81,13 @@ class FeedVC: UIViewController {
         getPosts()
 
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        getPosts()
+    }
 }
 
+//MARK: CollectionViewDelegates
 extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         posts.count
@@ -95,19 +100,31 @@ extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource {
         let post = posts[indexPath.row]
         DispatchQueue.main.async {
             if let photoUrl = post.photoUrl {
-                ImageHelper.shared.fetchImage(urlString: photoUrl) { (result) in
+                FirebaseStorageService.uploadManager.getImage(url: photoUrl) { (result) in
                     switch result {
                     case .failure(let error):
                         print(error)
-                        cell.feedImage.image = UIImage(named: "noImage")
-                    case .success(let imageFromFirebase):
-                            cell.feedImage.image = imageFromFirebase
+                    case .success(let firebaseImage):
+                        cell.feedImage.image = firebaseImage
+                    }
+                }
+                FirestoreService.manager.getUserNameFromPost(creatorID: post.creatorID) { (result) in
+                    switch result {
+                    case .failure(let error):
+                        print(error)
+                    case .success(let displayName):
+                        cell.nameLabel.text = displayName
                     }
                 }
             }
         }
         return cell
     }
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let singlePost = posts[indexPath.row]
+        let imageDetailVC = ImageDetailVC()
+        imageDetailVC.post = singlePost
+        present(imageDetailVC, animated: true, completion: nil)
+    }
     
 }
