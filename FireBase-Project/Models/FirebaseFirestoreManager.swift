@@ -83,6 +83,15 @@ class FirestoreService {
             }
         }
     }
+    func updateAppUser(id: String,newDisplayName: String,completion: @escaping (Result<(),Error>) -> ()) {
+        db.collection(FireStoreCollections.users.rawValue).document(id).updateData(["userName": newDisplayName]) { (error) in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success(()))
+            }
+        }
+    }
     
     //MARK: Posts
     func createPost(post: Post, completion: @escaping (Result<(), Error>) -> ()) {
@@ -114,13 +123,6 @@ class FirestoreService {
             }
         }
         db.collection(FireStoreCollections.posts.rawValue).order(by: sortingCriteria?.rawValue ?? "dateCreated", descending: sortingCriteria?.shouldSortAscending ?? true).getDocuments(completion: completionHandler)
-        
-    //not working
-        //Reminder: this is like a compactMap in that it exludes any recorss that have a nil value
-        //if your data works correctly, that shouldn't happen
-//        if let sort = sortingCriteria {
-//            collection.order(by: sort.rawValue, descending: sort.shouldSortAscending)
-//        }
             
     }
     

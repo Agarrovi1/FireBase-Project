@@ -39,7 +39,7 @@ class LoginVC: UIViewController {
         textField.borderStyle = .roundedRect
         textField.autocorrectionType = .no
         textField.isSecureTextEntry = true
-//        textField.addTarget(self, action: #selector(validateFields), for: .editingChanged)
+        textField.addTarget(self, action: #selector(tryLogIn), for: .primaryActionTriggered)
         return textField
     }()
     lazy var loginButton: UIButton = {
@@ -227,13 +227,10 @@ class LoginVC: UIViewController {
         }
     }
     @objc func displayForm(){
-        //create alert
         let alert = UIAlertController(title: "Sign In", message: "Create an account", preferredStyle: .alert)
         
-        //create cancel button
         let cancelAction = UIAlertAction(title: "Cancel" , style: .cancel)
         
-        //create save button
         let saveAction = UIAlertAction(title: "Submit", style: .default) { (action) -> Void in
             
             guard let email = self.signInEmail?.text, !email.isEmpty, let password = self.signInPassword?.text, !password.isEmpty else {
@@ -253,17 +250,14 @@ class LoginVC: UIViewController {
             }
         }
         
-        //add button to alert
         alert.addAction(cancelAction)
         alert.addAction(saveAction)
         
-        //email
         alert.addTextField(configurationHandler: {(textField: UITextField!) in
             textField.placeholder = "Enter email address"
             self.signInEmail = textField
         })
         
-        //password
         alert.addTextField(configurationHandler: {(textField: UITextField!) in
             textField.placeholder = "Enter password"
             textField.isSecureTextEntry = true

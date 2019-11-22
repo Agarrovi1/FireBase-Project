@@ -190,6 +190,19 @@ class ProfileVC: UIViewController {
         }
         }
     }
+    private func updateUserNameField(newDisplayName: String) {
+        guard let userUID = FirebaseAuthService.manager.currentUser?.uid else {
+            return
+        }
+        FirestoreService.manager.updateAppUser(id: userUID, newDisplayName: newDisplayName) { (result) in
+            switch result {
+            case .failure(let error):
+                print(error)
+            case .success:
+                print("updated users in FireStore")
+            }
+        }
+    }
     
     //MARK: - Objc Functions
     @objc func displayForm(){
@@ -212,6 +225,7 @@ class ProfileVC: UIViewController {
                 case .success:
                     self.makeAlert(with: "Display Name Changed!", and: "Yay")
                     self.displayNameLabel.text = newName
+                    self.updateUserNameField(newDisplayName: newName)
                 case .failure(let error):
                     print(error)
                 }
@@ -223,9 +237,8 @@ class ProfileVC: UIViewController {
         alert.addAction(cancelAction)
         alert.addAction(saveAction)
         
-        
         alert.addTextField(configurationHandler: {(textField: UITextField!) in
-            textField.placeholder = "Enter email address"
+            textField.placeholder = "Enter New Display Name"
             self.displayNameTextBox = textField
         })
         self.present(alert, animated: true, completion: nil)
