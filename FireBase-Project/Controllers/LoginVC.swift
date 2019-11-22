@@ -28,7 +28,6 @@ class LoginVC: UIViewController {
         textField.backgroundColor = .white
         textField.borderStyle = .roundedRect
         textField.autocorrectionType = .no
-//        textField.addTarget(self, action: #selector(validateFields), for: .editingChanged)
         return textField
     }()
     lazy var passwordTextField: UITextField = {
@@ -157,11 +156,9 @@ class LoginVC: UIViewController {
             guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
                 let sceneDelegate = windowScene.delegate as? SceneDelegate, let window = sceneDelegate.window
                 else {
-                    //MARK: TODO - handle could not swap root view controller
                     return
             }
             
-            //MARK: TODO - refactor this logic into scene delegate
             UIView.transition(with: window, duration: 0.3, options: .transitionFlipFromBottom, animations: {
                 if FirebaseAuthService.manager.currentUser?.photoURL != nil {
                     window.rootViewController = {
@@ -191,11 +188,9 @@ class LoginVC: UIViewController {
             guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
                 let sceneDelegate = windowScene.delegate as? SceneDelegate, let window = sceneDelegate.window
                 else {
-                    //MARK: TODO - handle could not swap root view controller
                     return
             }
             
-            //MARK: TODO - refactor this logic into scene delegate
             UIView.transition(with: window, duration: 0.3, options: .transitionFlipFromBottom, animations: {
                 if FirebaseAuthService.manager.currentUser?.photoURL != nil {
                     window.rootViewController = {

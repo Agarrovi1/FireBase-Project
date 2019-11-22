@@ -46,7 +46,6 @@ class FirestoreService {
     
     func updateCurrentUser(userName: String? = nil, photoURL: URL? = nil, completion: @escaping (Result<(), Error>) -> ()){
         guard let userId = FirebaseAuthService.manager.currentUser?.uid else {
-            //MARK: TODO - handle can't get current user
             return
         }
         var updateFields = [String:Any]()
@@ -107,8 +106,6 @@ class FirestoreService {
     }
     
     func getAllPosts(sortingCriteria: SortingCriteria?, completion: @escaping (Result<[Post], Error>) -> ()) {
-        //If i want to sort, or even to filter my collection, it's going to work with an instance of a different type - FIRQuery
-        //collection + sort/filter settings.getDocuments
         let completionHandler: FIRQuerySnapshotBlock = {
             (snapshot, error) in
             if let error = error {

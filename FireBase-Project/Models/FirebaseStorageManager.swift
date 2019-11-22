@@ -43,7 +43,6 @@ class FirebaseStorageService {
             if let error = error {
                 completion(.failure(error))
             } else {
-                //Try to get the actual URL for our image
                 imageLocation.downloadURL { (url, error) in
                     guard error == nil else {completion(.failure(error!));return}
                     guard let url = url?.absoluteString else {completion(.failure(error!));return}
