@@ -12,7 +12,7 @@ class FeedCell: UICollectionViewCell {
     var feedImage: UIImageView = {
         let image = UIImageView(frame: CGRect(x: 0, y: 0, width: 150, height: 100))
         image.backgroundColor = #colorLiteral(red: 0.9411764741, green: 0.4980392158, blue: 0.3529411852, alpha: 1)
-        image.contentMode = .scaleAspectFill
+        image.contentMode = .scaleAspectFit
         return image
     }()
     var nameLabel: UILabel = {
