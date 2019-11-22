@@ -88,7 +88,7 @@ class ImageUploadVC: UIViewController {
             addButton.widthAnchor.constraint(equalToConstant: 50)])
     }
     
-    //MARK: - Properties
+    //MARK: - Private Methods
     private func presentPhotoPickerController() {
         DispatchQueue.main.async{
             let imagePickerViewController = UIImagePickerController()

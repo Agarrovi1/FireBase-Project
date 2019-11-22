@@ -53,4 +53,7 @@ class FirebaseStorageService {
             }
         }
     }
+    func getImage() {
+        imagesFolderReference
+    }
 }
