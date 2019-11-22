@@ -86,6 +86,7 @@ class ImageDetailVC: UIViewController {
     private func loadDetails() {
         getSetImage()
         getSetUserName()
+        getDate()
         
     }
     private func getSetImage() {
@@ -111,6 +112,13 @@ class ImageDetailVC: UIViewController {
                 }
             }
         }
+    }
+    private func getDate() {
+        guard let post = post, let date = post.dateCreated else {return}
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM d, h:mm a"
+        let strDate = dateFormatter.string(from: date)
+        createdLabel.text = "Created at: \(strDate)"
     }
 
     //MARK: - LifeCycle
