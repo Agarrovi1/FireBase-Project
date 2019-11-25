@@ -114,10 +114,8 @@ class ImageUploadVC: UIViewController {
                 case .authorized:
                     self?.presentPhotoPickerController()
                 case .denied:
-                    //MARK: TODO - set up more intuitive UI interaction
                     print("Denied photo library permissions")
                 default:
-                    //MARK: TODO - set up more intuitive UI interaction
                     print("No usable status")
                 }
             })
@@ -152,14 +150,12 @@ class ImageUploadVC: UIViewController {
 extension ImageUploadVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let image = info[.editedImage] as? UIImage else {
-            //MARK: TODO - handle couldn't get image :(
             makeAlert(with: "Error", and: "Couldn't get image")
             return
         }
         self.image = image
         
         guard let imageData = image.jpegData(compressionQuality: 1) else {
-            //MARK: TODO - gracefully fail out without interrupting UX
             makeAlert(with: "Error", and: "could not compress image")
             return
         }
